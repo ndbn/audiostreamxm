@@ -2,6 +2,8 @@
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp
 	branch = 4.1
+    ignore = dirty
 [submodule "clibs/libxm-master"]
 	path = clibs/libxm-master
 	url = https://github.com/Artefact2/libxm
+    ignore = dirty
