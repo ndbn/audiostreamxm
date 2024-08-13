@@ -1,0 +1,9 @@
+[configuration]
+
+compatibility_minimum = "4.1.0"
+entry_symbol = "asxm_library_init"
+reloadable = false
+
+[libraries]
+windows.debug.x86_64 = "gdext_audiostreamxm/audiostreamxm.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "gdext_audiostreamxm/audiostreamxm.windows.template_release.x86_64.dll"
