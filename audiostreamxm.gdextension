@@ -7,3 +7,5 @@ reloadable = false
 [libraries]
 windows.debug.x86_64 = "gdext_audiostreamxm/audiostreamxm.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "gdext_audiostreamxm/audiostreamxm.windows.template_release.x86_64.dll"
+web.debug.wasm32 = "gdext_audiostreamxm/audiostreamxm.web.template_debug.wasm32.wasm"
+web.release.wasm32 = "gdext_audiostreamxm/audiostreamxm.web.template_release.wasm32.wasm"
