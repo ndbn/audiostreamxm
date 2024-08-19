@@ -15,9 +15,10 @@ using namespace godot;
 class AudioStreamXm : public AudioStream
 {
   GDCLASS(AudioStreamXm, AudioStream);
+  
 
   float mix_rate;
-  StringName file_path;
+  String file_path;
   bool loop;
 
 protected:
@@ -33,7 +34,7 @@ protected:
     ClassDB::bind_method(D_METHOD("get_loop"), &AudioStreamXm::get_loop);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "mix_rate", PROPERTY_HINT_RANGE, "20,192000,1,suffix:Hz"), "set_mix_rate", "get_mix_rate");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "file_path", PROPERTY_HINT_FILE, "*.xm,*.mod"), "set_file_path", "get_file_path");
+    ADD_PROPERTY(PropertyInfo(Variant::STRING, "file_path", PROPERTY_HINT_FILE, "*.xm"), "set_file_path", "get_file_path");
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "loop"), "set_loop", "get_loop");
   }
 
@@ -41,17 +42,17 @@ public:
   void set_mix_rate(float p_mix_rate) { mix_rate = p_mix_rate; };
   float get_mix_rate() const { return mix_rate; };
 
-  void set_file_path(const StringName& p_file_path) { file_path = p_file_path; };
-  StringName get_file_path() const { return file_path; };
+  void set_file_path(const String& p_file_path) { file_path = p_file_path; };
+  String get_file_path() const { return file_path; };
 
-  void set_loop(const bool& p_loop) { loop = p_loop; };
+  void set_loop(const bool p_loop) { loop = p_loop; };
   bool get_loop() const { return loop; };
 
   Ref<AudioStreamPlayback> _instantiate_playback() const override;
-  String _get_stream_name() const override { return "UserFeed"; };
+  String _get_stream_name() const override { return ""; };
 
   double _get_length() const { return 0; };
-  bool _is_monophonic() const override { return true; };
+  bool _is_monophonic() const override { return false; };
   AudioStreamXm();
   ~AudioStreamXm();
 };
@@ -65,9 +66,8 @@ class AudioStreamXmPlayback : public AudioStreamPlaybackResampled
   friend class AudioStreamXm;
 
   bool active;
-  const AudioStreamXm *generator = nullptr;
+  Ref<AudioStreamXm> xm_stream = nullptr;
   xm_context_t *xm_ctx = nullptr;
-
 
   float static_buffer[max_samples * 2];
 
@@ -78,12 +78,12 @@ protected:
 
 public:
   virtual int _mix_resampled(AudioFrame *p_buffer, int p_frames) override;
-  virtual double _get_stream_sampling_rate() const override { return generator->get_mix_rate(); };
+  virtual double _get_stream_sampling_rate() const override { return xm_stream->get_mix_rate(); };
 
   virtual void _start(double p_from_pos = 0.0) override;
-  virtual void _stop() override { active = false; };
-  virtual bool _is_playing() const override { return active; };
-  virtual int _get_loop_count() const override { return xm_get_loop_count(xm_ctx); }; // times it looped
+  virtual void _stop() override;
+  virtual bool _is_playing() const override;
+  virtual int _get_loop_count() const override; // times it looped
 
 
   AudioStreamXmPlayback();

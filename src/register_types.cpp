@@ -9,7 +9,7 @@
 using namespace godot;
 
 
-static Ref<ResourceFormatLoaderXm> xm_loader;
+// static Ref<ResourceFormatLoaderXm> xm_loader;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level)
 {
@@ -21,9 +21,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	GDREGISTER_CLASS(AudioStreamXm)
 	GDREGISTER_CLASS(AudioStreamXmPlayback)
 
-	GDREGISTER_CLASS(ResourceFormatLoaderXm)
-	xm_loader.instantiate();
-	ResourceLoader::get_singleton()->add_resource_format_loader(xm_loader);
+	// GDREGISTER_CLASS(ResourceFormatLoaderXm)
+	// xm_loader.instantiate();
+	// ResourceLoader::get_singleton()->add_resource_format_loader(xm_loader);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level)
@@ -33,7 +33,7 @@ void uninitialize_gdextension_types(ModuleInitializationLevel p_level)
 		return;
 	}
 
-	ResourceLoader::get_singleton()->remove_resource_format_loader(xm_loader);
+	// ResourceLoader::get_singleton()->remove_resource_format_loader(xm_loader);
 
 }
 
